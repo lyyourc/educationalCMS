@@ -1,0 +1,18 @@
+.item {
+  color: #888;
+  font-size: .8em;
+  margin-bottom: 10px;
+}
+
+.app-nav a {
+  text-decoration: none;
+}
+
+.info {
+  padding: 10px;
+}
+
+.info .name {
+  font-size: 1.2em;
+  color: #555;
+}
