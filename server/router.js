@@ -14,9 +14,16 @@ router.route('/student')
   })
 
   .post((req, res) => {
+    const body = req.body;
+
+    const student = {
+      studentId: body.studentId,
+      name: body.name
+    };
+
     connection.query(
       'INSERT INTO student SET ?',
-      req.body,
+      student,
       (err, result) => {
         if (err) throw err;
         res.json(result);
@@ -24,6 +31,22 @@ router.route('/student')
   });
 
 router.route('/student/:studentId')
+  .put((req, res) => {
+    const body = req.body;
+
+    connection.query(
+      'UPDATE student SET name = ? WHERE studentId = ?',
+      [body.name, req.params.studentId],
+      (err, result) => {
+        if (err) {
+          console.log(err);
+          return;
+        }
+
+        res.json(result);
+      }
+    );
+  })
   .delete((req, res) => {
     connection.query(
       'DELETE FROM student WHERE studentId = ?',

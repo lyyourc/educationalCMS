@@ -19,11 +19,25 @@ export const getStudents = () => {
   };
 };
 
-export const updateStudent = student => {
+const doUpdateStudent = student => {
   return {
     type: actionTypes.UPDATE_STUDENT,
     student
   };
+};
+export const updateStudent = student => {
+  return dispatch =>
+    fetch(`api/student/${student.studentId}`, {
+      method: 'PUT',
+      body: JSON.stringify(student),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    .then(res => res.json())
+    .then(json =>
+      dispatch(doUpdateStudent(student))
+    );
 };
 
 const doAddStudent = student => {

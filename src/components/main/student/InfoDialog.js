@@ -12,12 +12,10 @@ export default class InfoDialog extends React.Component {
     super(props);
 
     this.state = {
-      open: false
+      open: false,
+      isAdd: false,
+      student: {}
     };
-  }
-
-  ComponentDidMount() {
-    setFormValus(this.form, this.props.student);
   }
 
   handleOpen = () => {
@@ -28,15 +26,9 @@ export default class InfoDialog extends React.Component {
     this.setState({open: false});
   };
 
-  submit = form => {
-    const {addStudent} = this.props;
-
-    addStudent(getFormValues(this.form));
-  };
-
   render() {
-    const {addStudent} = this.props;
-    const that = this;
+    const {addStudent, updateStudent} = this.props;
+    const {name, studentId, gender, birthday} = this.state.student;
 
     const actions = [
       <FlatButton
@@ -49,7 +41,22 @@ export default class InfoDialog extends React.Component {
         primary={true}
         keyboardFocused={true}
         onTouchTap={() => {
-          addStudent(getFormValues(this.form))
+          const studentIdField = this.studentIdField;
+
+          if (this.state.isAdd) {
+            addStudent(getFormValues(this.form))
+            this.setState({
+              open: false,
+              isAdd: false
+            });
+          }
+          else {
+            updateStudent(getFormValues(this.form))
+            this.setState({
+              open: false,
+              student: {}
+            })
+          }
         }}
       />,
     ];
@@ -63,12 +70,13 @@ export default class InfoDialog extends React.Component {
          open={this.state.open}
          onRequestClose={this.handleClose}
        >
-         <form ref={node => that.form = node}>
+         <form ref={node => this.form = node} >
            <TextField hintText="id" name="id" style={{display: 'none'}}/>
-           <TextField hintText="姓名" name="name"/>
-           <TextField hintText="学号" name="studentId"/>
-           <TextField hintText="性别" name="gender"/>
-           <TextField hintText="生日" name="birthday"/>
+           <TextField hintText="姓名" name="name" defaultValue={name}/>
+           <TextField hintText="学号" name="studentId"
+            defaultValue={studentId} ref={node => this.studentIdField = node}/>
+           <TextField hintText="性别" name="gender" defaultValue={gender} />
+           <TextField hintText="生日" name="birthday" defaultValue={birthday} />
            <TextField hintText="学院" name="department"/>
            <TextField hintText="专业" name="major"/>
          </form>

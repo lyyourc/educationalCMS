@@ -6,7 +6,8 @@ import FlatButton from 'material-ui/lib/flat-button';
 
 const StudentItem = ({
   student,
-  removeStudent
+  removeStudent,
+  initStudent
 }) => {
   const {
     name, gender,
@@ -31,7 +32,10 @@ const StudentItem = ({
 
       <section>
         <FlatButton label="删除" onClick={removeStudent}/>
-        <FlatButton label="修改" primary={true} />
+        <FlatButton
+          label="修改"
+          primary={true}
+          onClick={() => initStudent(student)} />
       </section>
     </div>
   );

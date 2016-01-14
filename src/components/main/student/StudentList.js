@@ -8,14 +8,16 @@ import StudentItem from './StudentItem';
 
 const StudentList = ({
   students,
-  removeStudent
+  removeStudent,
+  initStudent
 }) => (
   <div className="row">
     {students.map(s =>
       <StudentItem
-        key={s.studentId}
+        key={s.studentId + s.name}
         student={s}
         removeStudent={() => removeStudent(s.studentId)}
+        initStudent={initStudent}
       />
     )}
   </div>

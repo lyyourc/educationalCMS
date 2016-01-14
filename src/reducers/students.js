@@ -24,7 +24,7 @@ const students = (
     case actionTypes.ADD_STUDENT:
       return [
         ...state,
-        student({}, action)
+        action.student
       ];
 
     case actionTypes.REMOVE_STUDENT:
@@ -34,6 +34,15 @@ const students = (
       return action.students;
 
     case actionTypes.UPDATE_STUDENT:
+      const {student} = action;
+      const targetIndex = state.findIndex(item =>
+        item.studentId = student.studentId);
+
+      return [
+        ...state.slice(0, targetIndex),
+        action.student,
+        ...state.slice(targetIndex + 1)
+      ];
 
     default:
       return state;

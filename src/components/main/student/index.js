@@ -18,15 +18,29 @@ const Student = ({
     <div>
       <StudentToolbar
         className="col-xs-12"
-        showDialog={() => dialog.handleOpen()}
+        showDialog={() => {
+          dialog.handleOpen();
+          dialog.setState({
+            ...dialog.props,
+            isAdd: true
+          });
+        }}
       />
       <StudentList
         students={students}
         removeStudent={actions.removeStudent}
+        initStudent={student => {
+          dialog.handleOpen();
+          dialog.setState({
+            ...dialog.props,
+            student
+          });
+        }}
       />
       <InfoDialog
         ref={node => dialog = node}
         addStudent={actions.addStudent}
+        updateStudent={actions.updateStudent}
       />
     </div>
   );
